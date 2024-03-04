@@ -99,7 +99,45 @@
             // pitch: 45, // pitch in degrees
             zoom: 12 // starting zoom
         });
+        // Handle click event on the map to allow user contribution
+    map.on('click', function (e) {
+        if (popup) {
+            popup.remove();
+        }
 
+        // Create the HTML content for the contribution popup
+        const popupContent = '<div id="popup">' +
+                             '<input type="text" id="name" placeholder="Input your name here...">' +
+                             '<input type="text" id="content" placeholder="Input your message here...">' +
+                             '<input type="hidden" id="timestamp" value="' + new Date().toISOString() + '">' + // Hidden field for timestamp
+                             '<button id="submit">Submit</button></div>';
+
+        // Create a new popup and set its content
+        popup = new maplibregl.Popup({ closeOnClick: false })
+            .setLngLat(e.lngLat)
+            .setHTML(popupContent)
+            .addTo(map);
+
+        // Attach an event listener to the submit button to handle new record submission
+        document.getElementById('submit').addEventListener('click', submitNewRecord);
+        e.preventDefault();
+    });
+
+    // Function to handle the submission of a new record
+    async function submitNewRecord() {
+        let contributor = document.getElementById('name').value;
+        let content = document.getElementById('content').value;
+        let timestamp = document.getElementById('timestamp').value; // Get the timestamp value
+        let lngLat = popup.getLngLat();
+
+        // Create a new URLSearchParams object and append the data to it
+        let newRecord = new URLSearchParams();
+        newRecord.append('contributor', contributor);
+        newRecord.append('content', content);
+        newRecord.append('timestamp', timestamp); // Append timestamp to the record
+        newRecord.append('lng', lngLat.lng);
+        newRecord.append('lat', lngLat.lat);
+    }
         // Fetch existing records when the window is loaded
         window.addEventListener("load", async function () {
             let response = await fetch('https://pmap-28a9a9408e2b.herokuapp.com/api/get-record', {
