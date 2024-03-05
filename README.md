@@ -27,7 +27,6 @@ Welcome to the interactive map project focusing on Seattle's diverse culinary an
 Special thanks to:
 - Bo Zhao | University of Washington
 - Liz Peng | University of Washington
-- [Other individuals or organizations to acknowledge]
 
 ## Contact Information
 Please reach out to me over email! The address is amk10@uw.edu
