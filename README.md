@@ -7,6 +7,7 @@ Welcome to the interactive map project focusing on Seattle's diverse culinary an
 - [Interactive Map of Seattle's Culinary and Goods Scene](https://anthonykminsu.github.io/ParticipatoryMapofLocalBusinesses/docs/index.html)
 
 ## Screenshot
+<img width="698" alt="Screen Shot 2024-03-05 at 7 49 18 AM" src="https://github.com/anthonykminsu/ParticipatoryMapofLocalBusinesses/assets/77130958/fb9587ea-ebc4-4695-b78a-9ffafd3da51e">
 
 
 ## Primary Functions
