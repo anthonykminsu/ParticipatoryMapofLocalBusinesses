@@ -71,9 +71,6 @@
             uncovering the hidden gems of Seattle's gastronomy. Click on the map to add your favorite spots, 
             share reviews, and choose between a restaurant or a store, represented by distinctive icons on the map.
          </p>
-         <p><br>Note:</br> Pick red or blue to indicate if you would like to submit a message for a store
-            or restaraunt.
-         </p>
       </div>
       <!-- JavaScript code for the interactive map and data submission -->
       <script>
@@ -115,7 +112,6 @@
                  'properties': {
                      'contributor': data.rows[i].contributor,
                      'content': data.rows[i].content,
-                     'color': data.rows[i].color 
                  },
                  'geometry': {
                      'type': 'Point',
