@@ -101,53 +101,28 @@
         });
     
         // Fetch existing records when the window is loaded
-        // Fetch existing records when the window is loaded
-window.addEventListener("load", async function () {
-    let response = await fetch('https://sealocalbusinesses-b633682e0dff.herokuapp.com/api/get-record', {
-        method: 'GET'
-    });
+        window.addEventListener("load", async function () {
+            let response = await fetch('https://sealocalbusinesses-b633682e0dff.herokuapp.com/api/get-record', {
+                method: 'GET'
+            });
 
-    let data = await response.json();
-
-    // Iterate through the fetched records and add them to the GeoJSON data object
-    for (let i = 0; i < data.rows.length; i++) {
-        geojson.features.push({
-            'type': 'Feature',
-            'properties': {
-                'contributor': data.rows[i].contributor,
-                'content': data.rows[i].content,
-            },
-            'geometry': {
-                'type': 'Point',
-                'coordinates': [data.rows[i].lng, data.rows[i].lat]
+            let data = await response.json();
+      
+            // Iterate through the fetched records and add them to the GeoJSON data object
+            for (let i = 0; i < data.rows.length; i++) {
+                geojson.features.push({
+                    'type': 'Feature',
+                    'properties': {
+                        'contributor': data.rows[i].contributor,
+                        'content': data.rows[i].content,
+                    },
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': [data.rows[i].lng, data.rows[i].lat]
+                    }
+                });
             }
         });
-    }
-
-    // After the data is fetched, ensure the map is loaded before adding the source and layer
-    if (map.isStyleLoaded()) {
-        addDataToMap();
-    } else {
-        map.on("load", addDataToMap);
-    }
-});
-
-function addDataToMap() {
-    map.addSource('places', {
-        'type': 'geojson',
-        'data': geojson
-    });
-
-    map.addLayer({
-        'id': 'placesLayer',
-        'type': 'circle',
-        'source': 'places',
-        'paint': {
-            'circle-radius': 6,
-            'circle-color': '#B42222'
-        }
-    });
-}
 
         // After the map loads, add the GeoJSON source and layer for existing points
         map.on("load", function () {
