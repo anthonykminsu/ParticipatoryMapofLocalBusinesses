@@ -55,6 +55,12 @@
         #submit {
             float: right;
         }
+
+        #email {
+            width: 100%;
+            height: 20px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -94,7 +100,7 @@
         // Create a new map instance
         let map = new maplibregl.Map({
             container: 'map', // container id
-            style: 'https://api.maptiler.com/maps/streets-v2/style.json?key=Cusoe5zmfmn26glFoeoe', // style URL
+            style: 'https://api.maptiler.com/maps/bright-v2/style.json?key=kaWmhRAa75Qhnbe6Tjfu', // style URL
             center: [-122.3321, 47.6062], // starting position [lng, lat]
             // pitch: 45, // pitch in degrees
             zoom: 12 // starting zoom
@@ -199,8 +205,13 @@
             }
 
             // Create the HTML content for the contribution popup
-            const popupContent = '<div id="popup"><input type="text" id="name" placeholder="Input your name here..."><input type="text" id="content" placeholder="Input your message here..."><button id="submit">submit</button></div>';
-
+            const popupContent = `
+                <div id="popup">
+                    <input type="text" id="name" placeholder="Input your name here...">
+                    <input type="text" id="content" placeholder="Input your message here...">
+                    <input type="email" id="email" placeholder="Input your email here...">
+                    <button id="submit">Submit</button>
+                </div>`;
             // Create a new popup and set its content
             popup = new maplibregl.Popup({ closeOnClick: false })
                 .setLngLat(e.lngLat)
@@ -214,16 +225,19 @@
 
         // Function to handle the submission of a new record
         async function submitNewRecord() {
-            let contributor = document.getElementById('name').value;
-            let content = document.getElementById('content').value;
-            let lngLat = popup.getLngLat();
+    let contributor = document.getElementById('name').value;
+    let email = document.getElementById('email').value; // Get the email
+    let content = document.getElementById('content').value;
+    let lngLat = popup.getLngLat();
 
-            // Create a new URLSearchParams object and append the data to it
-            let newRecord = new URLSearchParams();
-            newRecord.append('contributor', contributor);
-            newRecord.append('content', content);
-            newRecord.append('lng', lngLat.lng);
-            newRecord.append('lat', lngLat.lat);
+    let newRecord = new URLSearchParams();
+    newRecord.append('contributor', contributor);
+    newRecord.append('email', email); // Append email
+    newRecord.append('content', content);
+    newRecord.append('lng', lngLat.lng);
+    newRecord.append('lat', lngLat.lat);
+
+            
 
             // Set the POST request settings
             let settings = {
@@ -244,6 +258,7 @@
                     'type': 'Feature',
                     'properties': {
                         'contributor': contributor,
+                        'email': email,
                         'content': content,
                     },
                     'geometry': {
