@@ -253,13 +253,14 @@
                  geojson.features.push({
          'type': 'Feature',
          'properties': {
-            'contributor': data.rows[i].contributor,
-            'content': data.rows[i].content,
-            'color': data.rows[i].color // Ensure this is included and correct
-        },
-        'geometry': {
-            'type': 'Point',
-            'coordinates': [data.rows[i].lng, data.rows[i].lat]
+             'contributor': contributor,
+             'email': email,
+             'content': content,
+             'color': color // Include the color property
+         },
+         'geometry': {
+             'type': 'Point',
+             'coordinates': [lngLat.lng, lngLat.lat]
          }
          });
          map.getSource('places').setData(geojson);
